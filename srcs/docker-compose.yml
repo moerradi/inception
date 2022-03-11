@@ -1,0 +1,46 @@
+version: "3.9"
+
+services:
+
+  nginx:
+    build: ./requirements/nginx
+    networks:
+      - net
+    ports:
+      - "443:443"
+    volumes:
+      - wp_volume:/var/wordpress
+    restart: unless-stopped
+    depends_on:
+      - wordpress
+
+  wordpress:
+    build: ./requirements/wordpress
+    networks:
+      - net
+    ports:
+      - "9000:9000"
+    volumes:
+      - wp_volume:/var/wordpress
+    restart: unless-stopped
+    depends_on:
+      - mariadb
+  mariadb:
+    build: ./requirements/mariadb
+    networks:
+      - net
+    ports:
+      - "3306:3306"
+    # volumes:
+    #   - wp_volume:/var/wordpress
+    restart: unless-stopped
+
+networks:
+  net:
+volumes:
+  wp_volume:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: requirements/wordpress/wp_files

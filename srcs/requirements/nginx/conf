@@ -1,0 +1,15 @@
+server {
+    listen				443 ssl;
+    server_name			42.fr moerradi.42.fr;
+	ssl_certificate		/var/ssl/moerradi.crt;
+	ssl_certificate_key	/var/ssl/moerradi.key;
+    root				/var/wordpress;
+    index				index.php;
+
+  location ~* \.php$ {
+    fastcgi_pass	wordpress:9000;
+    include			fastcgi_params;
+    fastcgi_param	SCRIPT_FILENAME    $document_root$fastcgi_script_name;
+    fastcgi_param	SCRIPT_NAME        $fastcgi_script_name;
+  }
+}
