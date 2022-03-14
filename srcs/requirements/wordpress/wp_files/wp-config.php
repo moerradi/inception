@@ -80,6 +80,14 @@ $table_prefix = 'wp_';
  * @link https://wordpress.org/support/article/debugging-in-wordpress/
  */
 define( 'WP_DEBUG', false );
+define('WP_CACHE', true);
+define('NONCE_SALT', 'dC+s2OdIT699imA3.xRx6E3qMATU1d');
+
+define('WP_REDIS_HOST', 'redis');
+define('WP_REDIS_PORT', '6379');
+define('WP_REDIS_PASSWORD', 'password');
+define('WP_CACHE_KEY_SALT', 'moerradi.42.fr');
+
 
 /* Add any custom values between this line and the "stop editing" line. */
 

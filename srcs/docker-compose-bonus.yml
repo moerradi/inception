@@ -42,6 +42,16 @@ services:
     env_file:
       - .env
 
+  redis:
+    build: ./requirements/redis
+    networks:
+      - net
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+    env_file:
+      - .env
+
 networks:
   net:
 volumes:
@@ -50,4 +60,4 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: ./requirements/wordpress/wp_files
+      device: requirements/wordpress/wp_files
