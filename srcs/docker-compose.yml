@@ -36,8 +36,8 @@ services:
       - net
     ports:
       - "3306:3306"
-    # volumes:
-    #   - wp_volume:/var/wordpress
+    volumes:
+      - db_volume:/var/lib/mysql
     restart: unless-stopped
     env_file:
       - .env
@@ -50,4 +50,10 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: ./requirements/wordpress/wp_files
+      device: $WORKDIR/requirements/wordpress/wp_files
+  db_volume:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: $WORKDIR/requirements/mariadb/db-data
