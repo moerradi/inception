@@ -7,4 +7,4 @@ RUN apt-get install -y redis-server
 # setup redis password
 COPY setup.sh .
 # start redis
-CMD ["redis-server"]
+CMD ["bash", "setup.sh"]

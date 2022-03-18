@@ -5,6 +5,7 @@ server {
 	ssl_certificate_key	/var/ssl/moerradi.key;
     root				/var/wordpress;
     index				index.php;
+	ssl_protocols		TLSv1.2 TLSv1.3;
 
   location ~* \.php$ {
     fastcgi_pass	wordpress:9000;

@@ -36,8 +36,8 @@ services:
       - net
     ports:
       - "3306:3306"
-    # volumes:
-    #   - wp_volume:/var/wordpress
+    volumes:
+      - db_volume:/var/lib/mysql
     restart: unless-stopped
     env_file:
       - .env
@@ -52,6 +52,18 @@ services:
     env_file:
       - .env
 
+  ftp:
+    build: ./requirements/ftp
+    networks:
+      - net
+    ports:
+      - "21:21"
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - wp_volume:/var/wordpress
+
 networks:
   net:
 volumes:
@@ -60,4 +72,11 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: requirements/wordpress/wp_files
+      device: /home/$USER/data/wp_data
+  db_volume:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: /home/$USER/data/mysql_data
+

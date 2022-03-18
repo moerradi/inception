@@ -1,21 +1,16 @@
 if [ -d "/run/mysqld" ]; then
 	echo "[i] mysqld already present, skipping creation"
-	chown -R mysql:mysql /run/mysqld
 else
 	echo "[i] mysqld not found, creating...."
 	mkdir -p /run/mysqld
-	chown -R mysql:mysql /run/mysqld
 fi
 
 if [ -d /var/lib/mysql/mysql ]; then
 	echo "[i] MySQL directory already present, skipping creation"
-	chown -R mysql:mysql /var/lib/mysql
 else
 	echo "[i] MySQL data directory not found, creating initial DBs"
 
-	chown -R mysql:mysql /var/lib/mysql
-
-	mysql_install_db --user=mysql --ldata=/var/lib/mysql > /dev/null
+	mysql_install_db --ldata=/var/lib/mysql > /dev/null
 
 	if [ "$MYSQL_ROOT_PASSWORD" = "" ]; then
 		MYSQL_ROOT_PASSWORD=`pwgen 16 1`
@@ -57,7 +52,7 @@ EOF
 	    fi
 	fi
 
-	mysqld --user=mysql --bootstrap --verbose=0 --skip-name-resolve --skip-networking=0 < $tfile
+	mysqld --bootstrap --verbose=0 --skip-name-resolve --skip-networking=0 < $tfile
 	rm -f $tfile
 	echo
 	echo 'MySQL init process done. Ready for start up.'
@@ -66,4 +61,4 @@ EOF
 	echo "exec /usr/bin/mysqld --user=mysql --console --skip-name-resolve --skip-networking=0" "$@"
 fi
 
-exec mysqld_safe --user=mysql --console --skip-name-resolve --skip-networking=0 $@
+exec mysqld_safe --console --skip-name-resolve --skip-networking=0 $@
