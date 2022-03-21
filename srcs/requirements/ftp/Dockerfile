@@ -1,5 +1,6 @@
 FROM debian:buster
-
+ARG FTP_USER
+ARG FTP_PASSWORD
 #udpate and upgrade
 RUN apt-get update && apt-get upgrade -y
 
@@ -12,6 +13,9 @@ COPY ./vsftpd.userlist /etc/vsftpd.userlist
 # set password for www-data
 # RUN echo "www-data:$(openssl passwd -crypt 'password')" >> /etc/shadow
 RUN mkdir /var/run/chroot-secured
+RUN useradd -ms /bin/bash ${FTP_USER}
+RUN echo ${FTP_USER}:${FTP_PASSWORD} | chpasswd
+
 # start ftp non deamon
 CMD ["/usr/sbin/vsftpd", "/etc/vsftpd.conf"]
 # sleep infinity

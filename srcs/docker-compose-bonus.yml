@@ -53,16 +53,21 @@ services:
       - .env
 
   ftp:
-    build: ./requirements/ftp
+    build:
+      context: ./requirements/ftp
+      args:
+            FTP_USER: ${FTP_USER}
+            FTP_PASSWORD: ${FTP_PASSWORD}
     networks:
       - net
     ports:
-      - "21:21"
+      - "2121:2121"
+      - "2020:2020"
     restart: unless-stopped
     env_file:
       - .env
     volumes:
-      - wp_volume:/var/wordpress
+      - wp_volume:/home/${FTP_USER}
 
 networks:
   net:
