@@ -61,13 +61,14 @@ services:
     networks:
       - net
     ports:
-      - "2121:2121"
-      - "2020:2020"
+      - "20:20"
+      - "21:21"
+      - "1024-1048:1024-1048"
     restart: unless-stopped
     env_file:
       - .env
     volumes:
-      - wp_volume:/home/${FTP_USER}
+      - wp_volume:/var/wordpress
 
 networks:
   net:

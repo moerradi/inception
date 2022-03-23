@@ -17,6 +17,9 @@ RUN useradd -ms /bin/bash ${FTP_USER}
 RUN echo ${FTP_USER}:${FTP_PASSWORD} | chpasswd
 
 # start ftp non deamon
-CMD ["/usr/sbin/vsftpd", "/etc/vsftpd.conf"]
+COPY startup.sh .
+RUN chmod +x startup.sh
+
+CMD ["bash", "./startup.sh"]
 # sleep infinity
 # CMD ["sleep", "infinity"]

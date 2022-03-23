@@ -40,4 +40,9 @@ flush_db:
 
 re: fclean all
 
+logs:
+	docker-compose -f $(COMPFILE) logs
+bonus_logs:
+	docker-compose -f $(BONCOMPFILE) logs
+
 .PHONY: all clean fclean re
