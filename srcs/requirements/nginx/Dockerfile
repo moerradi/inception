@@ -19,7 +19,7 @@ COPY ./conf /etc/nginx/sites-available/
 RUN ln -s /etc/nginx/sites-available/conf /etc/nginx/sites-enabled/
 # delete default conf
 RUN rm /etc/nginx/sites-enabled/default
-EXPOSE 80 443
+EXPOSE 443
 # restart nginx
 # RUN service nginx restart
 

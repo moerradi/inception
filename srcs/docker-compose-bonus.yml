@@ -70,6 +70,16 @@ services:
     volumes:
       - wp_volume:/var/wordpress
 
+  portfolio:
+    build: ./requirements/portfolio
+    networks:
+      - net
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+    env_file:
+      - .env
+
 networks:
   net:
 volumes:

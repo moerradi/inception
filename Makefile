@@ -23,12 +23,11 @@ bonus_clean:
 	docker-compose -f $(BONCOMPFILE) down
 
 cleanup:
-	docker volume ls -q | xargs -r docker volume rm
-	docker image ls -q | xargs -r docker image rm
 	docker system prune -f
 	docker volume prune -f
 	docker network prune -f
-	docker volume prune -f
+	docker volume ls -q | xargs -r docker volume rm
+	docker image ls -q | xargs -r docker image rm
 
 fclean: clean cleanup
 

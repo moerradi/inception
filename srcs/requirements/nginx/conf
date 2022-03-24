@@ -13,4 +13,10 @@ server {
 	  fastcgi_param	SCRIPT_NAME        $fastcgi_script_name;
 	  fastcgi_param	REQUEST_URI        $request_uri;
 	}
+	location /portfolio {
+		proxy_pass http://portfolio:5000/;
+	}
+	location /assets {
+		proxy_pass http://portfolio:5000/assets;
+	}
 }
