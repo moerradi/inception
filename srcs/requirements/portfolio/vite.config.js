@@ -21,9 +21,11 @@ export default defineConfig({
       },
     ],
   },
+  base: '/portfolio/',
   build: {
     commonjsOptions: {
       transformMixedEsModules: true,
-    }
+    },
+	//specify base
   } 
 })

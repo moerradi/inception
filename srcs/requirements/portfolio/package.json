@@ -1,6 +1,8 @@
 {
-  "name": "simple-light-react",
+  "name": "moe-portfolio",
   "version": "0.1.0",
+  "description": "A simple portfolio site for moe",
+  "homepage": "https://moerradi.42.fr/portfolio",
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
