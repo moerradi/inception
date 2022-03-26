@@ -12,11 +12,7 @@ function Home() {
 
       {/*  Site header */}
       <Header />
-
-      {/*  Page content */}
       <main className="flex-grow">
-
-        {/*  Page sections */}
         <HeroHome />
         <FeaturesHome />
         <FeaturesBlocks />

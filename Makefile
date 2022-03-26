@@ -2,25 +2,28 @@ NAME=inception
 SRCS= srcs/.env ./srcs/requirements/*
 COMPFILE= ./srcs/docker-compose.yml
 BONCOMPFILE= ./srcs/docker-compose-bonus.yml
-DBDIR= srcs/requirements/mariadb/db-data
+DBDIR=/home/$(USER)/data/mysql_data
+PORTAINERDB=/home/$(USER)/data/portainer_data
+WPFILES=/home/$(USER)/data/wp_data
 
 $(NAME): all
 
-all:
-	# sudo chown -R $(USER) $(DBDIR)
-	docker-compose -f $(COMPFILE) up --build -d
+premake:
+	mkdir -p $(DBDIR)
+	mkdir -p $(PORTAINERDB)
+	mkdir -p $(WPFILES)
 
-bonus:
-	# sudo chown -R $(USER) $(DBDIR)
-	docker-compose -f $(BONCOMPFILE) up --build -d
+all: premake
+	docker-compose -f  $(COMPFILE) -p inception up --build -d
+
+bonus: premake
+	docker-compose -f   $(BONCOMPFILE) -p inception up --build -d
 
 clean:
-	# sudo chown -R $(USER) $(DBDIR)
-	docker-compose -f $(COMPFILE) down
+	docker-compose -f  $(COMPFILE) -p inception down
 
 bonus_clean:
-	# sudo chown -R $(USER) $(DBDIR)
-	docker-compose -f $(BONCOMPFILE) down
+	docker-compose -f  $(BONCOMPFILE) -p inception down
 
 cleanup:
 	docker system prune -f
@@ -35,12 +38,16 @@ bonus_fclean: bonus_clean cleanup
 
 flush_db:
 	sudo rm -rf $(DBDIR)
-	mkdir $(DBDIR)
+	mkdir -p $(PORTAINERDB)
+	mkdir -p $(DBDIR)
+	mkdir -p $(PORTAINERDB)
+	mkdir -p $(WPFILES)
 
 re: fclean all
 
 logs:
 	docker-compose -f $(COMPFILE) logs
+
 bonus_logs:
 	docker-compose -f $(BONCOMPFILE) logs
 

@@ -3,7 +3,9 @@ version: "3.9"
 services:
 
   nginx:
+    container_name: nginx
     build: ./requirements/nginx
+    image: nginx
     networks:
       - net
     ports:
@@ -17,7 +19,9 @@ services:
       - .env
 
   wordpress:
+    container_name: wordpress
     build: ./requirements/wordpress
+    image: wordpress
     networks:
       - net
     ports:
@@ -31,7 +35,9 @@ services:
       - .env
 
   mariadb:
+    container_name: mariadb
     build: ./requirements/mariadb
+    image: mariadb
     networks:
       - net
     ports:

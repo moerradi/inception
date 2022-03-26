@@ -3,7 +3,9 @@ version: "3.9"
 services:
 
   nginx:
+    container_name: nginx
     build: ./requirements/nginx
+    image: nginx
     networks:
       - net
     ports:
@@ -17,7 +19,9 @@ services:
       - .env
 
   wordpress:
+    container_name: wordpress
     build: ./requirements/wordpress
+    image: wordpress
     networks:
       - net
     ports:
@@ -31,7 +35,9 @@ services:
       - .env
 
   mariadb:
+    container_name: mariadb
     build: ./requirements/mariadb
+    image: mariadb
     networks:
       - net
     ports:
@@ -43,7 +49,9 @@ services:
       - .env
 
   redis:
+    container_name: redis
     build: ./requirements/redis
+    image: redis
     networks:
       - net
     ports:
@@ -53,11 +61,13 @@ services:
       - .env
 
   ftp:
+    container_name: ftp
     build:
       context: ./requirements/ftp
       args:
             FTP_USER: ${FTP_USER}
             FTP_PASSWORD: ${FTP_PASSWORD}
+    image: ftp
     networks:
       - net
     ports:
@@ -71,7 +81,9 @@ services:
       - wp_volume:/var/wordpress
 
   portfolio:
+    container_name: portfolio
     build: ./requirements/portfolio
+    image: portfolio
     networks:
       - net
     ports:
@@ -79,6 +91,20 @@ services:
     restart: unless-stopped
     env_file:
       - .env
+  
+  portainer:
+    container_name: portainer
+    build: ./requirements/portainer
+    image: portainer
+    networks:
+      - net
+    ports:
+      - "7000:7000"
+    restart: unless-stopped
+    volumes:
+      - pt_volume:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    
 
 networks:
   net:
@@ -95,4 +121,9 @@ volumes:
       type: 'none'
       o: 'bind'
       device: /home/$USER/data/mysql_data
-
+  pt_volume:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: /home/$USER/data/portainer_data

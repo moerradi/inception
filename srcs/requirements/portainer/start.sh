@@ -1,0 +1,1 @@
+./portainer --bind=":7000"
